@@ -1,7 +1,7 @@
 require 'rack'
-require_relative './config/routes'
-require_relative 'lib/static_viewer'
-require_relative 'lib/show_exceptions'
+require './config/routes'
+require_relative 'static_viewer'
+require_relative 'show_exceptions'
 
 module TGauge
   class Server
@@ -23,5 +23,6 @@ module TGauge
         app: full_app,
         Port: 3000
       })
+    end
   end
 end

@@ -6,19 +6,19 @@ module TGauge
   class Generate < Thor
     desc 'model <name>', 'generate a model.'
     def model(name)
-      File.open('./app/models/#{name.downcase}.rb', 'w') do |f|
+      File.open("./app/models/#{name.downcase}.rb", 'w') do |f|
         f.write("class #{name.capitalize} < TGauge::TRecordBase\n\n")
         f.write("end\n")
         f.write("#{name.capitalize}.finalize!")
       end
 
-      migration("Create#{name.capitalize}}")
+      migration("#{name.capitalize}")
       puts "#{name} model created"
     end
 
     desc 'controller <name>', 'generate a controller.'
     def controller(name)
-      File.open('./app/controllers/#{name.downcase}.rb', 'w') do |f|
+      File.open("./app/controllers/#{name.downcase}_controller.rb", 'w') do |f|
         f.write("class #{name.capitalize}Controller < TGauge::TControllerBase\n\n")
         f.write("end")
       end
@@ -33,7 +33,7 @@ module TGauge
       ts = Time.now.to_i
       filename = "#{ts}_#{name.underscore.downcase}"
 
-      File.open('./db/migrations/#{filename}.sql', 'w') do |f|
+      File.open("./db/migrations/#{filename}.sql", 'w') do |f|
         f.write "CREATE TABLE IF NOT EXISTS #{name} (\n"
         f.write "\tid SERIAL PRIMARY KEY,\n"
         f.write ')'
@@ -44,7 +44,7 @@ module TGauge
   class Db < Thor
     desc 'create', 'creates the DB'
     def create
-      require_relative '../lib/db_connection'
+      require_relative '../lib/db/db_connection'
       TGauge::DBConnection.reset
       puts 'db created!'
     end
@@ -53,14 +53,14 @@ module TGauge
     def migrate
       # Creates Version table if necessary,
       # then runs needed migrations in order.
-      require_relative '../lib/db_connection'
+      require_relative '../lib/db/db_connection'
       TGauge::DBConnection.migrate
       puts 'migrated!'
     end
 
     desc 'seed', 'seeds the DB'
     def seed
-      require_relative '../lib/puffs'
+      require_relative '../lib/tgauge'
       TGauge::Seed.populate
       puts 'db seeded!'
     end
@@ -102,18 +102,18 @@ module TGauge
       Dir.mkdir "./#{name}/app/views"
       Dir.mkdir "./#{name}/app/controllers"
       File.open("./#{name}/app/controllers/application_controller.rb", 'w') do |f|
-        f.write File.read(File.expand_path('../../lib/template/app/controllers/application_controller.rb', __FILE__))
+        f.write File.read(File.expand_path('../../lib/templates/app/controllers/application_controller.rb', __FILE__))
       end
       File.open("./#{name}/config/routes.rb", 'w') do |f|
-        f.write File.read(File.expand_path('../../lib/template/config/routes.rb', __FILE__))
+        f.write File.read(File.expand_path('../../lib/templates/config/routes.rb', __FILE__))
       end
       Dir.mkdir "./#{name}/db"
       Dir.mkdir "./#{name}/db/migrations"
       File.open("./#{name}/db/seeds.rb", 'w') do |f|
-        f.write File.read(File.expand_path('../../lib/template/db/seeds.rb', __FILE__))
+        f.write File.read(File.expand_path('../../lib/templates/db/seeds.rb', __FILE__))
       end
       File.open("./#{name}/Gemfile", 'w') do |f|
-        f.write File.read(File.expand_path('../../lib/template/Gemfile', __FILE__))
+        f.write File.read(File.expand_path('../../lib/templates/Gemfile', __FILE__))
       end
     end
   end

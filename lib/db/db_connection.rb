@@ -28,60 +28,65 @@ module TGauge
           instance.exec(File.read(file))
           instance.exec(<<-SQL)
             INSERT INTO
-            migrations (filename)
+              migrations (filename)
             VALUES
-            ('#{filename}')
-          SQL
+              ('#{filename}')
+            SQL
         end
       end
     end
 
     def self.instance
-      open if @db.nil?
+      open if @postgres.nil?
 
-      @db
+      @postgres
     end
 
     def self.execute(*args)
+      args.flatten!
+
       print_query(*args)
-      instance.execute(*args)
-    end
-
-    def self.last_insert_row_id
-      instance.last_insert_row_id
-    end
-
-    def self.reset
-      commands = [
-        "dropdb #{app_name}",
-        "createdb #{app_name}"
-      ]
-      commands.each { |command| `#{command}` }
+      query = self.number_placeholders(args.unshift[0])
+      params = args[1..-1]
+      params.flatten!
+      instance.exec(query, params)
     end
 
     private
 
+    def self.number_placeholders(query_string)
+      count = 0
+      query_string.chars.map do |char|
+        if char == "?"
+          count += 1
+          "$#{count}"
+        else
+          char
+        end
+      end.join("")
+    end
+
     def self.ensure_migrations_table
       table = instance.exec(<<-SQL)
-      SELECT to_regclass('migrations') AS exists
+        SELECT to_regclass('migrations') AS exists
       SQL
 
       unless table[0]['exists']
         instance.exec(<<-SQL)
-        CREATE_TABLE migrations(
-        id SERIAL PRIMARY KEY,
-        filename VARCHAR(255) NOT NULL
-        )
+          CREATE TABLE migrations(
+            id SERIAL PRIMARY KEY,
+            filename VARCHAR(255) NOT NULL
+          )
         SQL
       end
     end
 
     def self.migrated_files
       Set.new instance.exec(<<-SQL).values.flatten
-      SELECT
-      filename
-      FROM
-      migrations
+        SELECT
+          filename
+        FROM
+          migrations
       SQL
     end
 

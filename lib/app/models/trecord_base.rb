@@ -28,17 +28,20 @@ module TGauge
       end
     end
 
+    def self.destroy_all
+      all.each(&:destroy!)
+    end
+
     def self.columns
       # ...
       return @columns if @columns
 
       arr = DBConnection.execute(<<-SQL)
-      SELECT
-      *
-      FROM
-      #{self.table_name}
+        SELECT
+          *
+        FROM
+          #{self.table_name}
       SQL
-
       @columns = []
       arr.nfields.times do |i|
         @columns << arr.fname(i)
@@ -49,7 +52,7 @@ module TGauge
 
     def self.finalize!
       columns.each do |column|
-        # inst_var = "@" + column.to_s
+        inst_var = "@" + column.to_s
         define_method(column) do
           attributes[column]
         end
@@ -69,10 +72,10 @@ module TGauge
 
     def self.all
       objs_arr = DBConnection.execute(<<-SQL)
-      SELECT
-      #{table_name}.*
-      FROM
-      #{table_name}
+        SELECT
+          #{table_name}.*
+        FROM
+          #{table_name}
       SQL
 
       parse_all(objs_arr)
@@ -85,12 +88,12 @@ module TGauge
 
     def self.find(id)
       obj = DBConnection.execute(<<-SQL, id)
-      SELECT
-      #{table_name}.*
-      FROM
-      #{table_name}
-      WHERE
-      #{table_name}.id = ?
+        SELECT
+          #{table_name}.*
+        FROM
+          #{table_name}
+        WHERE
+          #{table_name}.id = ?
       SQL
 
       parse_all(obj).first
@@ -118,26 +121,39 @@ module TGauge
       attr_count = cols.count
       column_str = cols.join(", ")
       quest_str = Array.new(attr_count) {"?"}.join(", ")
-      debugger
+
       DBConnection.execute(<<-SQL, attribute_values)
-      INSERT INTO
-      #{table_name} (#{column_str})
-      VALUES
-      (#{quest_str})
+        INSERT INTO
+          #{table_name} (#{column_str})
+        VALUES
+          (#{quest_str})
       SQL
     end
 
+    def destroy!
+      if self.class.find(id)
+        Puffs::DBConnection.execute(<<-SQL)
+          DELETE
+          FROM
+            #{self.class.table_name}
+          WHERE
+            id = #{id}
+        SQL
+        return self
+      end
+    end
+
     def update
-      # attr_count = columns.count - 1
+      attr_count = columns.count - 1
       column_str = columns[1..-1].map { |col| "#{col} = ?" }.join(", ")
 
       DBConnection.execute(<<-SQL, attribute_values)
-      UPDATE
-      #{table_name}
-      SET
-      #{column_str}
-      WHERE
-      id = ?
+        UPDATE
+          #{table_name}
+        SET
+          #{column_str}
+        WHERE
+          id = ?
       SQL
     end
 

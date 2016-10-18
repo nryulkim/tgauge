@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'TGauge/version'
+require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = "tgauge"
@@ -9,14 +9,15 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nam Kim"]
   spec.email         = ["nryulkim@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Simple Ruby ORM and MVC}
+  spec.description   = %q{Allows you to build a simple webapp}
+  spec.homepage      = "https://github.com/nryulkim/tgauge"
+  spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = "https://rubygems.org"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -31,9 +32,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_runtime_dependency 'thor'
-  spec.add_runtime_dependency 'pg'
-  spec.add_runtime_dependency 'activesupport'
-  spec.add_runtime_dependency 'rack'
-  spec.add_runtime_dependency 'fileutils'
+  spec.add_runtime_dependency 'thor', '~> 0.19'
+  spec.add_runtime_dependency 'pg', '~> 0.18'
+  spec.add_runtime_dependency 'activesupport', '~> 4.2', '>= 4.2.5.1'
+  spec.add_runtime_dependency 'rack', '~> 1.6', '>=1.6.4'
+  spec.add_runtime_dependency 'fileutils', '~> 0.7'
 end

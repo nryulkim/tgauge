@@ -1,3 +1,5 @@
-require '../lib/tgauge'
+#!/usr/bin/env ruby -U
+
+require 'tgauge'
 
 TGauge::CLI.start(ARGV)

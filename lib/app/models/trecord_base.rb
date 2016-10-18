@@ -49,7 +49,7 @@ module TGauge
 
     def self.finalize!
       columns.each do |column|
-        inst_var = "@" + column.to_s
+        # inst_var = "@" + column.to_s
         define_method(column) do
           attributes[column]
         end
@@ -128,7 +128,7 @@ module TGauge
     end
 
     def update
-      attr_count = columns.count - 1
+      # attr_count = columns.count - 1
       column_str = columns[1..-1].map { |col| "#{col} = ?" }.join(", ")
 
       DBConnection.execute(<<-SQL, attribute_values)

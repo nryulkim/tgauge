@@ -79,6 +79,7 @@ module TGauge
     register(Generate, 'generate', 'generate <command>', 'Generates a model, migration, or controller.')
     register(Db, 'db', 'db <command>', 'Accesses commands for the DB.')
 
+    desc 'g', 'shortcut for generate'
     subcommand 'g', Generate
 
     desc 'server', 'starts the WebBrick server'

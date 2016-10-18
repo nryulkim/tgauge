@@ -1,5 +1,4 @@
 require 'json'
-require 'byebug'
 class Session
   # find the cookie for this app
   # deserialize the cookie into a hash

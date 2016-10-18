@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby -U
 
-require 'tgauge'
+require_relative './cli'
 
 TGauge::CLI.start(ARGV)

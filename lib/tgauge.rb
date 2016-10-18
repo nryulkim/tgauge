@@ -14,5 +14,3 @@ require './db/seeds'
 require_relative './db/db_connection'
 require_relative './db/router'
 require_relative './db/server'
-
-require_relative './cli'

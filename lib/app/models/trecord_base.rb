@@ -36,7 +36,7 @@ module TGauge
       # ...
       return @columns if @columns
 
-      arr = DBConnection.execute(<<-SQL)
+      arr = TGauge::DBConnection.execute(<<-SQL)
         SELECT
           *
         FROM
@@ -71,7 +71,7 @@ module TGauge
     end
 
     def self.all
-      objs_arr = DBConnection.execute(<<-SQL)
+      objs_arr = TGauge::DBConnection.execute(<<-SQL)
         SELECT
           #{table_name}.*
         FROM
@@ -87,7 +87,7 @@ module TGauge
     end
 
     def self.find(id)
-      obj = DBConnection.execute(<<-SQL, id)
+      obj = TGauge::DBConnection.execute(<<-SQL, id)
         SELECT
           #{table_name}.*
         FROM
@@ -122,7 +122,7 @@ module TGauge
       column_str = cols.join(", ")
       quest_str = Array.new(attr_count) {"?"}.join(", ")
 
-      DBConnection.execute(<<-SQL, attribute_values)
+      TGauge::DBConnection.execute(<<-SQL, attribute_values)
         INSERT INTO
           #{table_name} (#{column_str})
         VALUES
@@ -132,7 +132,7 @@ module TGauge
 
     def destroy!
       if self.class.find(id)
-        Puffs::DBConnection.execute(<<-SQL)
+        TGauge::DBConnection.execute(<<-SQL)
           DELETE
           FROM
             #{self.class.table_name}
@@ -147,7 +147,7 @@ module TGauge
       attr_count = columns.count - 1
       column_str = columns[1..-1].map { |col| "#{col} = ?" }.join(", ")
 
-      DBConnection.execute(<<-SQL, attribute_values)
+      TGauge::DBConnection.execute(<<-SQL, attribute_values)
         UPDATE
           #{table_name}
         SET

@@ -5,7 +5,7 @@ require 'yaml'
 PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
 MIGRATION_FILES = Dir.glob("./db/migrations/*.sql").to_a
 
-module TGauge
+module TGaugex
   class DBConnection
     def self.app_name
       YAML.load_file(Dir.pwd + '/config/database.yml')['database']
@@ -16,6 +16,10 @@ module TGauge
         dbname: app_name,
         port: 5432
       )
+    end
+
+    def self.reset
+      self.instance
     end
 
     def self.migrate

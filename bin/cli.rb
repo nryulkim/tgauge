@@ -23,7 +23,7 @@ module TGauge
         f.write("end")
       end
 
-      Dir.mkdir "./app/views/#{name.downcase}_controller"
+      Dir.mkdir "./app/views/#{name.downcase}"
       puts "#{name} controller created"
     end
 
@@ -51,8 +51,7 @@ module TGauge
 
     desc 'migrate', 'runs pending migrations'
     def migrate
-      # Creates Version table if necessary,
-      # then runs needed migrations in order.
+      # runs needed migrations in order.
       require_relative '../lib/db/db_connection'
       TGauge::DBConnection.migrate
       puts 'migrated!'
@@ -60,6 +59,7 @@ module TGauge
 
     desc 'seed', 'seeds the DB'
     def seed
+      # runs the seeds file in db/seeds that has been created by the new command
       require_relative '../lib/tgauge'
       TGauge::Seed.populate
       puts 'db seeded!'
@@ -67,6 +67,7 @@ module TGauge
 
     desc 'reset', 'resets the DB and seeds it'
     def reset
+      #  the PostgreSQL database
       create
       migrate
       seed

@@ -1,36 +1,38 @@
 # TGauge
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/TGauge`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+TGauge is a lightweight Ruby MVC / ORM gem.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'TGauge'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install TGauge
+1. `install gem tgauge`
 
 ## Usage
 
-TODO: Write usage instructions here
+### New Project
+- `tgauge new [PROJ NAME]`
+  - Creates a new project directory with [PROJ NAME] as the name
+- `tgauge server`
+  - Runs the server
 
-## Development
+### Generate (g)
+- `tgauge g migration [name]`
+  - Creates an empty SQL file in `db/migrations/` with a timestamp.
+- `tgauge g controller [name]`
+  - Creates a controller file with a directory in views.
+- `tgauge g model [name]`
+  - Creates a model file and a migration file.
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Database (db)
+- `tgauge db create`
+  - Sets up the database
+- `tgauge db seed`
+  - Seeds the database from `db/seeds`
+- `tgauge db migrate`
+  - Runs any migrations in `db/migrations/`
+- `tgauge db reset`
+  - Creates / migrates / seeds the database
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/TGauge.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/nryulkim/TGauge.

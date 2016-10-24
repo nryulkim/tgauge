@@ -32,6 +32,33 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 - `tgauge db reset`
   - Creates / migrates / seeds the database
 
+## Functionality
+### Controllers
+- session
+  - Controllers have access to the session cookie
+- flash
+  - Controllers have access to a flash object that persists the data for only one call.
+- CSURF Protection
+  - Each controller authenticates for CSURF attacks. This can be disabled by setting the check_authenticity_token variable to false.
+
+### Routes
+- Add the controller's routes through the `config/routes.rb`
+  - The format should be as follows.
+    - `get Regexp.new("^/MODEL/$"), CONTROLLER, :index`
+  - You can use `get`, `post`, `put`, and `delete` routes.
+
+### ORM
+- Available functions
+  - my_attr_reader
+  - my_attr_accessor
+  - destroy_all
+  - find
+  - all
+  - insert
+- Models are able to associate with other models.
+  - Models can have a belongs_to association with another model.
+  - Models can have a have_many or has_one association with another model.
+  - Models can have a through relationship to another model.
 
 ## Contributing
 

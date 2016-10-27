@@ -52,23 +52,81 @@ TGauge is a lightweight Ruby MVC / ORM gem.
   - attr_reader
     - Creates a function that gives lets you fetch the data from an instance variable
 ```
+Usage:
+
+attr_reader :name1, :name2
+```
+
+```
 def [name]
   @name
 end
 ```
   - attr_accessor
     - Uses attr_reader to create a fetch function for an instance variable.
-    - Creates a function that gives lets you set the data from an instance variable
+    - Creates a function that gives lets you set the data from an instance variable.
+```
+Usage:
+
+attr_accessor :name1, :name2
+```
+
 ```
 def [name]= (val)
   @name = val
 end
 ```
   - destroy_all
+    - Destroys each item in the associated table.
+```
+Usage:
+
+Model.destroy_all
+```
+
   - find
+    - Find's a specific item in the associated table with the id of the input.
+```
+Usage:
+
+Model.find(id#)
+```
   - all
-  - insert
+    - Gets all items in the associated table.
+```
+Usage:
+
+Model.all
+```
+  - new
+    - Creates a new instance of the Model.
+```
+Usage:
+
+Model.new(options_hash)
+```
+  - save
+    - Saves the instance of the Model into the table.
+```
+Usage:
+
+Model.new(options_hash).save
+```
+  - create
+    - Creates a new instance of Model and then saves it.
+```
+Usage:
+
+Model.create(options_hash)
+```
   - where
+    - Finds items with the condition provided.
+```
+Usage:
+
+Model.where(attr: val)
+```
+
 - Models are able to associate with other models.
   - Models can have a belongs_to association with another model.
   - Models can have a have_many or has_one association with another model.

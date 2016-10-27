@@ -11,6 +11,8 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 ### New Project
 - `tgauge new [PROJ NAME]`
   - Creates a new project directory with [PROJ NAME] as the name
+- `tgauge new [PROJ NAME] true`
+  - Creates a new project directoryy with [PROJ NAME] with React.js folders
 - `tgauge server`
   - Runs the server
 
@@ -21,6 +23,10 @@ TGauge is a lightweight Ruby MVC / ORM gem.
   - Creates a controller file with a directory in views.
 - `tgauge g model [name]`
   - Creates a model file and a migration file.
+- `tgauge g component [name] [path]`
+  - Creates a component file with name at path "./frontend/component/[path]"
+- `tgauge g container [name] [path]`
+  - Creates a container and component file with name at path "./frontend/component/[path]"
 
 ### Database (db)
 - `tgauge db create`
@@ -49,6 +55,13 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 
 ### ORM
 - Available functions
+  - validates
+    - runs the list of functions before each save
+```
+Usage:
+
+validates: :method_name1, :method_name2
+```
   - attr_reader
     - Creates a function that gives lets you fetch the data from an instance variable
 ```

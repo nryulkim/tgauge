@@ -1,4 +1,3 @@
-require 'active_support'
 require 'active_support/inflector'
 require 'active_support/core_ext'
 require 'erb'
@@ -12,12 +11,24 @@ module TGauge
       @@defender = true
     end
 
-    attr_reader :req, :res, :params
     # Setup the controller
     def initialize(req, res, route_params = {})
       @req = req
       @res = res
+      @validations = []
       @params = @req.params.merge(route_params)
+    end
+
+    def req
+      @req
+    end
+
+    def res
+      @res
+    end
+
+    def params
+      @params
     end
 
     # Helper method to alias @already_built_response

@@ -113,6 +113,10 @@ module TGauge
       attributes.values
     end
 
+    def validates(*methods)
+      @validations = methods
+    end
+
     def insert
       cols = columns.reject { |col| col == "id" }
       attr_count = cols.count
@@ -155,6 +159,10 @@ module TGauge
     end
 
     def save
+      @validations.each do |method|
+        self.send(method)
+      end
+      
       if attributes[:id]
         update
       else

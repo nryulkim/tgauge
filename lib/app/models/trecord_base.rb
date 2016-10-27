@@ -9,11 +9,8 @@ module TGauge
     extend Searchable
 
     def self.attr_accessor(*names)
+      self.attr_reader(names)
       names.each do |name|
-        define_method(name) do
-          instance_variable_get("@" + name.to_s)
-        end
-
         define_method(name.to_s + "=") do |arg|
           instance_variable_set("@" + name.to_s, arg)
         end

@@ -51,19 +51,19 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 - Available functions
   - attr_reader
     - Creates a function that gives lets you fetch the data from an instance variable
-      ```
-      def [name]
-        @name
-      end
-      ```
+```
+def [name]
+  @name
+end
+```
   - attr_accessor
     - Uses attr_reader to create a fetch function for an instance variable.
     - Creates a function that gives lets you set the data from an instance variable
-      ```
-      def [name]= (val)
-        @name = val
-      end
-      ```
+```
+def [name]= (val)
+  @name = val
+end
+```
   - destroy_all
   - find
   - all

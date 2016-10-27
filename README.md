@@ -4,7 +4,7 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 
 ## Installation
 
-1. `install gem tgauge`
+1. `gem install tgauge`
 
 ## Usage
 
@@ -38,8 +38,8 @@ TGauge is a lightweight Ruby MVC / ORM gem.
   - Controllers have access to the session cookie
 - flash
   - Controllers have access to a flash object that persists the data for only one call.
-- CSURF Protection
-  - Each controller authenticates for CSURF attacks. This can be disabled by setting the check_authenticity_token variable to false.
+- CSRF Protection
+  - Each controller authenticates for CSRF attacks. This can be disabled by setting the check_authenticity_token variable to false.
 
 ### Routes
 - Add the controller's routes through the `config/routes.rb`

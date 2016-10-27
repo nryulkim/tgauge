@@ -8,7 +8,7 @@ module TGauge
     extend Associatable
     extend Searchable
 
-    def self.my_attr_accessor(*names)
+    def self.attr_accessor(*names)
       names.each do |name|
         define_method(name) do
           instance_variable_get("@" + name.to_s)
@@ -20,7 +20,7 @@ module TGauge
       end
     end
 
-    def self.my_attr_reader(*names)
+    def self.attr_reader(*names)
       names.each do |name|
         define_method(name) do
           instance_variable_get("@" + name.to_s)

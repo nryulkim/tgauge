@@ -49,12 +49,18 @@ TGauge is a lightweight Ruby MVC / ORM gem.
 
 ### ORM
 - Available functions
-  - my_attr_reader
-  - my_attr_accessor
+  - attr_reader
+    - Creates a function that gives lets you fetch the data from an instance variable
+      `def [attribute]
+        @attribute
+       end
+      `
+  - attr_accessor
   - destroy_all
   - find
   - all
   - insert
+  - where
 - Models are able to associate with other models.
   - Models can have a belongs_to association with another model.
   - Models can have a have_many or has_one association with another model.

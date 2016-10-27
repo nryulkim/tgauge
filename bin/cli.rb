@@ -41,32 +41,32 @@ module TGauge
     end
 
     desc 'container <name>, <path>', 'generates a component with name and its container'
-    def container(name, path)
+    def container(name, path = "")
       component_name = name.split('_').collect(&:capitalize).join
       component_filename = name.underscore.downcase
 
-      File.open("./frontend/components/#{path}/#{component_filename}_container.js") do |f|
-        f.write "import { connect } from 'react-redux';"
-        f.write "import #{component_name} from './component_filename'"
-        f.write ""
-        f.write "const mapStateToProps = (state) => {"
-        f.write "  return ({"
-        f.write ""
-        f.write "  });"
-        f.write "};"
-        f.write ""
-        f.write "const mapDispatchToProps = (dispatch) => {"
-        f.write "  return ({"
-        f.write ""
-        f.write "  });"
-        f.write "};"
-        f.write ""
-        f.write "export default connect("
-        f.write "  mapStateToProps, mapDispatchToProps"
+      File.open("./frontend/components/#{path}#{component_filename}_container.js", "w") do |f|
+        f.write "import { connect } from 'react-redux';\n"
+        f.write "import #{component_name} from './component_filename'\n"
+        f.write "\n"
+        f.write "const mapStateToProps = (state) => {\n"
+        f.write "  return ({\n"
+        f.write "\n"
+        f.write "  });\n"
+        f.write "};\n"
+        f.write "\n"
+        f.write "const mapDispatchToProps = (dispatch) => {\n"
+        f.write "  return ({\n"
+        f.write "\n"
+        f.write "  });\n"
+        f.write "};\n"
+        f.write "\n"
+        f.write "export default connect(\n"
+        f.write "  mapStateToProps, mapDispatchToProps\n"
         f.write ")(#{component_name});"
       end
 
-      self.component(name, path)
+      self.component(name, path = "")
     end
 
     desc 'component <name>, <path>', 'generates a component with name'
@@ -74,19 +74,19 @@ module TGauge
       component_name = name.split('_').collect(&:capitalize).join
       component_filename = name.underscore.downcase
 
-      File.open("./frontend/components/#{path}/#{component_filename}.jsx") do |f|
-        f.write "import React from 'react';"
-        f.write "class #{component_name} extends React.Component {"
-        f.write "  constructor(props){"
-        f.write "    super(props);"
-        f.write "  }"
-        f.write ""
-        f.write "  render(){"
-        f.write "    return("
-        f.write "      <html/>"
-        f.write "    );"
-        f.write "  }"
-        f.write "}"
+      File.open("./frontend/components/#{path}#{component_filename}.jsx", "w") do |f|
+        f.write "import React from 'react';\n\n"
+        f.write "class #{component_name} extends React.Component {\n"
+        f.write "  constructor(props){\n"
+        f.write "    super(props);\n"
+        f.write "  }\n"
+        f.write "\n"
+        f.write "  render(){\n"
+        f.write "    return(\n"
+        f.write "      <html/>\n"
+        f.write "    );\n"
+        f.write "  }\n"
+        f.write "}\n"
         f.write "export default #{component_name}"
       end
     end
@@ -140,7 +140,7 @@ module TGauge
       TGauge::Server.start
     end
 
-    desc 'new <name>, <React?(true/false)>', 'creates a new TGauge app with or without React folder directories ()'
+    desc 'new <name> <React?(true/false)>', 'creates a new TGauge app with or without React folder directories ()'
     def new(name, react = false)
       Dir.mkdir "./#{name}"
       Dir.mkdir "./#{name}/config"
@@ -172,15 +172,15 @@ module TGauge
         Dir.mkdir "./#{name}/frontend/actions"
         Dir.mkdir "./#{name}/frontend/components"
         Dir.mkdir "./#{name}/frontend/reducer"
-        File.open ("./#{name}/frontend/reducer/root_reducer.js", 'w') do |f|
+        File.open("./#{name}/frontend/reducer/root_reducer.js", 'w') do |f|
           f.write File.read(File.expand_path('../../lib/templates/frontend/reducer/root_reducer.js', __FILE__))
         end
         Dir.mkdir "./#{name}/frontend/middleware"
-        File.open ("./#{name}/frontend/middleware/root_middleware.js", 'w') do |f|
+        File.open("./#{name}/frontend/middleware/root_middleware.js", 'w') do |f|
           f.write File.read(File.expand_path('../../lib/templates/frontend/middleware/root_middleware.js', __FILE__))
         end
         Dir.mkdir "./#{name}/frontend/store"
-        File.open ("./#{name}/frontend/store/store.js", 'w') do |f|
+        File.open("./#{name}/frontend/store/store.js", 'w') do |f|
           f.write File.read(File.expand_path('../../lib/templates/frontend/store/store.js', __FILE__))
         end
         Dir.mkdir "./#{name}/frontend/utils"
